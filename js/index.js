@@ -29,14 +29,16 @@ const Network = neataptic.Network;
 Config.warnings = false;
 
 let neat;
-
-function setup() {
-  neat = new Neat(12, 4, null, {
+function creatNeat(){
+  return new Neat(12, 4, null, {
     popsize: population,
     elitism: Math.round(0.2 * population),
     mutationRate: mutationRate,
     mutationAmount: 3,
   });
+}
+function setup() {
+  neat = creatNeat()
   var canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent("field");
   populationSlider = createSlider(0, 200, population, 1);
@@ -119,29 +121,27 @@ function clear_gizmos() {
   gizmos = [];
   active_gizmos = [];
 
-  neat = new Neat(12, 2, null, {
-    popsize: population,
-    elitism: Math.round(0.2 * population),
-    mutationRate: mutationRate,
-    mutationAmount: 3,
-  });
-  newPopulation =[]
+  neat = creatNeat()
+  let newGeneration=[]
 
-  for (let index = 0; index < population; index++) {
+  for (let i = 0; i < population; i++) {
     neat.mutate()
-    neat.getOffspring()
-
+    newGeneration.push(neat.getOffspring());
   }
+
+  neat.population = newGeneration
+
   for (let index = 0; index < population; index++) {
-    neat.mutate()
-    neat.getOffspring()
     let gizmo = new Gizmo(neat, neat.population[index]);
     gizmo.color = round((360 * index) / population);
     gizmos.active = true;
     gizmos.push(gizmo);
     active_gizmos.push(gizmo);
   }
-
+  foods = []
+  for (let i = 0; i < foodSize; i++) {
+    foods.push(new Food());
+  }
   generation = 1;
 }
 
