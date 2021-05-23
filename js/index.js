@@ -70,10 +70,10 @@ function setup() {
   buttonClear.position(120, 25);
   buttonClear.style("font-family", "Bodoni");
   buttonClear.style("font-size", "15px");
-
-  checkbox = createCheckbox("Auto Save", false);
-  checkbox.position(30, 65);
-  checkbox.changed(toogle_auto_save);
+  //FIX IT
+  // checkbox = createCheckbox("Auto Save", false);
+  // checkbox.position(30, 65);
+  // checkbox.changed(toogle_auto_save);
 
   checkbox_best = createCheckbox("Show Best", showBest);
   checkbox_best.position(30, 50);
@@ -238,9 +238,6 @@ function draw() {
   strokeWeight(1);
 
   fill("black");
-  text(leader?.output.map(n=>round(n,1)) ||"- -", 30,200);
-
-  fill("black");
   rect(0, height - 50, 250, 50, 5);
 
   fill("white");
@@ -372,7 +369,7 @@ function checkLeader() {
 
     score = score.slice(0, 5);
 
-    scoreText = "Pontos:" + score;
+    scoreText = "Points:" + score;
     if (!foundActive) {
       timeLine = lifeTime;
     }
